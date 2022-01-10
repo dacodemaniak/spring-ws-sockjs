@@ -13,11 +13,23 @@ public class ChatController {
     @MessageMapping("/chat.register")
     @SendTo("/topic/public")
     public ChatMessage register(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        System.out.println("Received a new user : " + chatMessage.getSender());
+    	
+    	headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+    	
         return chatMessage;
     }
 
+    @MessageMapping("/chat.hello")
+    @SendTo("/topic/public")
+    public ChatMessage sayHello(@Payload ChatMessage[] chatMessage) {
+    	ChatMessage message = new ChatMessage();
+    	message.setSender(chatMessage[0].getSender());
+    	message.setContent("Hi all");
+    	message.setType(chatMessage[0].getType());
+    	
+        return message;
+    }
+    
     @MessageMapping("/chat.send")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {

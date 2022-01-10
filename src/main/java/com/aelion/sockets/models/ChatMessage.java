@@ -1,8 +1,20 @@
 package com.aelion.sockets.models;
 
-public class ChatMessage {
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class ChatMessage implements Serializable {
+
+	private static final long serialVersionUID = -5809487997380989279L;
+	
+	@JsonProperty("content")
 	private String content;
+	
+	@JsonProperty("sender")
 	private String sender;
+	
+	@JsonProperty("type")
 	private MessageType type;
 	
 	public enum MessageType {CHAT, LEAVE, JOIN}
